@@ -68,6 +68,9 @@
                                     </form>
                                 </div>
                             </li>
+                            <li>
+                                <a href="{{route("admin.posts.index")}}">index</a>
+                            </li>
                         @endguest
                     </ul>
                 </div>

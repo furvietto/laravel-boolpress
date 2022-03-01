@@ -62,8 +62,7 @@ class PostController extends Controller
         $newPost->fill($data);
         $newPost->slug = $slug;
         $newPost->save();
-        $post = ["ciao","bello"];
-        return redirect()->route('admin.posts.show', compact("post"));
+        return redirect()->route('admin.posts.show', $newPost->slug);
     }
 
     /**
@@ -72,9 +71,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($post)
+    public function show(Post $post)
     {
-        return view("admin.posts.show", $post);
+        return view("admin.posts.show", compact("post"));
     }
 
     /**

@@ -4,13 +4,13 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <form action="{{ route('admin.posts.store') }}" method="POST">
+                <form action="{{ route('admin.posts.update', $post) }}" method="POST">
                     @csrf
-                    @method('POST')
+                    @method('PATCH')
 
                     <div class="mb-3">
                         <label for="title" class="form-label">Title</label>
-                        <input type="text" class="form-control" id="title" name="title" value="{{ old('title') }}">
+                        <input type="text" class="form-control" id="title" name="title" value="{{ $post->title }}">
                         @error('title')
                             <div class="alert alert-danger">
                                 {{ $message }}
@@ -20,7 +20,7 @@
 
                     <div class="mb-3">
                         <label for="author" class="form-label">author</label>
-                        <input type="text" class="form-control" id="author" name="author" value="{{ old('author') }}">
+                        <input type="text" class="form-control" id="author" name="author" value="{{ $post->author }}">
                         @error('author')
                             <div class="alert alert-danger">
                                 {{ $message }}
@@ -31,16 +31,13 @@
                     <div class="mb-3">
                         <label for="content" class="form-label">Content</label>
                         <textarea class="form-control" id="content" rows="3"
-                            name="content">{{ old('content') }}</textarea>
+                            name="content">{{ $post->content }}</textarea>
                         @error('content')
                             <div class="alert alert-danger">
                                 {{ $message }}
                             </div>
                         @enderror
                     </div>
-
-                    <input type="hidden" name="user_id" id="user_id" value="{{ Auth::user()->id }}">
-
                     <input class="btn btn-primary" type="submit" value="Salva">
                 </form>
             </div>

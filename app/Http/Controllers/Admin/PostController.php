@@ -6,9 +6,16 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\Post;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
+    protected $validator =[
+        'title' => 'required|max:255',
+        'author' => 'required|max:255',
+        'content' => 'required',
+    ];
+
     /**
      * Display a listing of the resource.
      *
@@ -38,13 +45,13 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $validateData = $request->validate([
-            'title' => 'required|max:255',
-            'author' => 'required|max:255',
-            'content' => 'required',
-        ]);
 
         $data = $request->all();
+
+        $data['user_id'] = Auth::user()->id;
+
+        $request->validate($this->validator);
+
 
         $slug = Str::slug($data['title'], '-');
 
@@ -82,9 +89,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        //
+       return view("admin.posts.edit", compact("post"));
     }
 
     /**
@@ -94,9 +101,20 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
-        //
+        $request->validate($this->validator);
+
+        $data = $request->all();
+
+        $update = $post->update($data);
+
+        if(!$update) {
+            dd("save non riuscito");
+        }
+
+        return redirect()->route("admin.posts.show", $post);
+
     }
 
     /**
@@ -105,8 +123,10 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        //
+        $delete = $post->delete();
+        return redirect()->route("admin.posts.index")
+        ->with("status", "hai eliminato $post->title correttamente");
     }
 }

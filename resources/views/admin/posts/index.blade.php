@@ -39,13 +39,13 @@
                         <td>{{ $post->author }}</td>
                         <td>{{ $post->content }}</td>
                         <td><a href="{{route("admin.posts.show", $post->slug)}}" class="btn btn-warning">View</a></td>
-                        
-                        
-                            {{-- <form action="{{route("comics.destroy", $comic)}}" method="post">
+                        <td><a href="{{route("admin.posts.edit", $post->slug)}}" class="btn btn-primary">Edit</a></td>
+                        <td>
+                            <form action="{{route("admin.posts.destroy", $post)}}" method="post">
                                 @csrf
                                 @method("DELETE")
                                 <button class="btn btn-danger">Delete</button>
-                            </form> --}}
+                            </form>
                         </td>
                     </tr>
                 @endforeach

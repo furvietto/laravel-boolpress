@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Model\Post;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use App\Model\Category;
 
 class PostController extends Controller
 {
@@ -14,6 +15,7 @@ class PostController extends Controller
         'title' => 'required|max:255',
         'author' => 'required|max:255',
         'content' => 'required',
+        'category_id' => 'exists:App\Model\Category,id'
     ];
 
     /**
@@ -23,8 +25,15 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::paginate(20);
+        $posts = Post::orderBy('created_at', 'desc')->paginate(20);
         return view('admin.posts.index', compact('posts'));
+    }
+
+    public function indexUser()
+    {
+        $posts = Post::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(20);
+
+        return view('admin.posts.index', ['posts' => $posts]);
     }
 
     /**
@@ -34,7 +43,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('admin.posts.create');
+        $categories = Category::all();
+        return view('admin.posts.create', compact("categories"));
     }
 
     /**
@@ -79,7 +89,11 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-       return view("admin.posts.edit", compact("post"));
+        if (Auth::user()->id != $post->user_id) {
+            abort('403');
+        }
+        $categories = Category::all();
+       return view("admin.posts.edit", ['post' => $post, 'categories' => $categories]);
     }
 
     /**
@@ -92,10 +106,25 @@ class PostController extends Controller
     public function update(Request $request, Post $post)
     {
         $request->validate($this->validator);
-
+        if (Auth::user()->id != $post->user_id) {
+            abort('403');
+        }
         $data = $request->all();
 
-        $post->slug = Str::slug($data["title"], "-");
+        if ($data['title'] != $post->title) {
+            $post->title = $data['title'];
+            $post->slug = $post->createSlug($data['title']);
+        }
+        if ($data['content'] != $post->content) {
+            $post->content = $data['content'];
+        }
+        if ($data['author'] != $post->author) {
+            $post->author = $data['author'];
+        }
+        if ($data['category_id'] != $post->category_id) {
+            $post->category_id = $data['category_id'];
+        }
+       
 
         $update = $post->update($data);
 
@@ -115,6 +144,9 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        if (Auth::user()->id != $post->user_id) {
+            abort('403');
+        }
         $delete = $post->delete();
         return redirect()->route("admin.posts.index")
         ->with("status", "hai eliminato $post->title correttamente");

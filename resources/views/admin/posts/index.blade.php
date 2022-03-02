@@ -27,9 +27,8 @@
                         <th>Title</th>
                         <th>Author</th>
                         <th>Content</th>
-                        <th>view</th>
-                        <th>Edit</th>
-                        <th>Delete</th>
+                        <th colspan="3">Actions</th>
+                        
                     </tr>
                 </thead>
                 <tbody>
@@ -39,13 +38,19 @@
                         <td>{{ $post->author }}</td>
                         <td>{{ $post->content }}</td>
                         <td><a href="{{route("admin.posts.show", $post->slug)}}" class="btn btn-warning">View</a></td>
-                        <td><a href="{{route("admin.posts.edit", $post->slug)}}" class="btn btn-primary">Edit</a></td>
                         <td>
+                            @if (Auth::user()->id === $post->user_id)
+                            <a href="{{route("admin.posts.edit", $post->slug)}}" class="btn btn-primary">Edit</a>
+                            @endif
+                        </td>
+                        <td>
+                            @if (Auth::user()->id === $post->user_id)
                             <form action="{{route("admin.posts.destroy", $post)}}" method="post">
                                 @csrf
                                 @method("DELETE")
                                 <button class="btn btn-danger">Delete</button>
                             </form>
+                            @endif
                         </td>
                     </tr>
                 @endforeach

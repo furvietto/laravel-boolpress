@@ -10,7 +10,7 @@
 
                     <div class="mb-3">
                         <label for="title" class="form-label">Title</label>
-                        <input type="text" class="form-control" id="title" name="title" value="{{ $post->title }}">
+                        <input type="text" class="form-control" id="title" name="title" value="{{ old("title", $post->title) }}">
                         @error('title')
                             <div class="alert alert-danger">
                                 {{ $message }}
@@ -20,7 +20,7 @@
 
                     <div class="mb-3">
                         <label for="author" class="form-label">author</label>
-                        <input type="text" class="form-control" id="author" name="author" value="{{ $post->author }}">
+                        <input type="text" class="form-control" id="author" name="author" value="{{old("author",$post->author) }}">
                         @error('author')
                             <div class="alert alert-danger">
                                 {{ $message }}
@@ -31,7 +31,7 @@
                     <div class="mb-3">
                         <label for="content" class="form-label">Content</label>
                         <textarea class="form-control" id="content" rows="3"
-                            name="content">{{ $post->content }}</textarea>
+                            name="content">{{old("content", $post->content) }}</textarea>
                         @error('content')
                             <div class="alert alert-danger">
                                 {{ $message }}

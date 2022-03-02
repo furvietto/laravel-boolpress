@@ -47,27 +47,15 @@ class PostController extends Controller
     {
 
         $data = $request->all();
-
+        
         $data['user_id'] = Auth::user()->id;
 
         $request->validate($this->validator);
 
-
-        $slug = Str::slug($data['title'], '-');
-
-        $postPresente = Post::where('slug', $slug)->first();
-
-        $counter = 0;
-        while ($postPresente) {
-            $slug = $slug . '-' . $counter;
-            $postPresente = Post::where('slug', $slug)->first();
-            $counter++;
-        }
-
         $newPost = new Post();
 
         $newPost->fill($data);
-        $newPost->slug = $slug;
+        $newPost->slug = $newPost->createSlug($data['title']);
         $newPost->save();
         return redirect()->route('admin.posts.show', $newPost->slug);
     }
@@ -106,6 +94,8 @@ class PostController extends Controller
         $request->validate($this->validator);
 
         $data = $request->all();
+
+        $post->slug = Str::slug($data["title"], "-");
 
         $update = $post->update($data);
 

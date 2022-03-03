@@ -50,7 +50,7 @@
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{route("admin.categories.index")}}">
-                                        <i class="bi bi-folder"></i>
+                                        <i class="bi bi-archive"></i>
                                         Categories
                                     </a>
                                 </li>

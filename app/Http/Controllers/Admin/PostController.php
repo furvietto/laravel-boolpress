@@ -12,7 +12,6 @@ class PostController extends Controller
 {
     protected $validator =[
         'title' => 'required|max:255',
-        'author' => 'required|max:255',
         'content' => 'required',
         'category_id' => 'exists:App\Model\Category,id'
     ];
@@ -58,6 +57,8 @@ class PostController extends Controller
         $data = $request->all();
         
         $data['user_id'] = Auth::user()->id;
+        $data['author'] = Auth::user()->name;
+
 
         $request->validate($this->validator);
 
@@ -105,9 +106,11 @@ class PostController extends Controller
     public function update(Request $request, Post $post)
     {
         $request->validate($this->validator);
+        
         if (Auth::user()->id != $post->user_id) {
             abort('403');
         }
+
         $data = $request->all();
 
         if ($data['title'] != $post->title) {
@@ -116,9 +119,6 @@ class PostController extends Controller
         }
         if ($data['content'] != $post->content) {
             $post->content = $data['content'];
-        }
-        if ($data['author'] != $post->author) {
-            $post->author = $data['author'];
         }
         if ($data['category_id'] != $post->category_id) {
             $post->category_id = $data['category_id'];

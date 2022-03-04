@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 use App\Model\Category;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Model\Post;
 
 class CategorieController extends Controller
 {
@@ -26,7 +27,7 @@ class CategorieController extends Controller
      */
     public function create()
     {
-        
+        return view("admin.categories.create");
     }
 
     /**
@@ -37,7 +38,15 @@ class CategorieController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = $request->validate([
+            "name" => "required"
+        ]);
+        $data = $request->all();
+        $newCategory = new Category();
+        $newCategory->fill($data);
+        $newCategory->slug = $newCategory->createSlug($data['name']);
+        $newCategory->save();
+        return redirect()->route("admin.categories.index");
     }
 
     /**
@@ -57,9 +66,9 @@ class CategorieController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Category $category)
     {
-        //
+        return view("admin.categories.edit",compact("category"));
     }
 
     /**
@@ -69,9 +78,25 @@ class CategorieController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Category $category)
     {
-        //
+        $validate = $request->validate([
+            "name" => "required"
+        ]);
+        $data = $request->all();
+
+        if ($data['name'] != $category->title) {
+            $category->name = $data['name'];
+            $category->slug = $category->createSlug($data['name']);
+        }
+        $update = $category->update($data);
+
+        if(!$update) {
+            dd("save non riuscito");
+        }
+
+        return redirect()->route("admin.categories.show", $category);
+
     }
 
     /**
@@ -80,8 +105,19 @@ class CategorieController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Category $category)
     {
-        //
+       $category->delete();
+
+        $posts = Post::whereNull("category_id")->get();
+
+        foreach ($posts as $post) {
+            $post->category_id = Category::inRandomOrder()->first()->id;
+            $post->update();
+        }
+
+       return redirect()->route("admin.categories.index")
+       ->with("status", "$category->name eliminato correttamente");
+       ;
     }
 }

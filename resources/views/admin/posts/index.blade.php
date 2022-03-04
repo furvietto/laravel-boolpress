@@ -10,7 +10,7 @@
             <h1 class="h1">Posts - All Posts</h1>
         </div>
         <div class="col-2">
-            <a href="{{ route('admin.posts.create') }}" class="btn btn-primary">Add new Comics</a>
+            <a href="{{ route('admin.posts.create') }}" class="btn btn-primary">Add new Post</a>
         </div>
     </div>
     

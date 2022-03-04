@@ -36,15 +36,8 @@
                         @enderror
                     </div>
 
-                    <div class="mb-3">
-                        <label for="author" class="form-label">author</label>
-                        <input type="text" class="form-control" id="author" name="author" value="{{ old('author') }}">
-                        @error('author')
-                            <div class="alert alert-danger">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div>
+                    <h5>Author: {{Auth::user()->name}}</h5>
+
 
                     <div class="mb-3">
                         <label for="content" class="form-label">Content</label>

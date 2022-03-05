@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Model\Tag;
+use App\Model\Post;
 
 class PostTagSeeder extends Seeder
 {
@@ -11,6 +13,11 @@ class PostTagSeeder extends Seeder
      */
     public function run()
     {
-        //
+        $tags = Tag::all();
+        //ad ogni tag piu di un post
+        foreach ($tags as $tag) {
+            $posts = Post::inRandomOrder()->limit(6)->get();
+            $tag->posts()->attach($posts);
+        }
     }
 }

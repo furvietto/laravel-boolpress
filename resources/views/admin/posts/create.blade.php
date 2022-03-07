@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <form action="{{ route('admin.posts.store') }}" method="POST">
+                <form action="{{ route('admin.posts.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('POST')
                     <div class="mb-3">
@@ -69,6 +69,15 @@
                         @enderror
                     </div>
 
+                    <div class="mb-3">
+                        <label for="image" class="form-label">Insert Image</label>
+                        <input class="form-control" type="file" id="image" name="image">
+                        @error('image')
+                            <div class="alert alert-danger mt-3">
+                                {{$message}}
+                            </div>
+                        @enderror
+                    </div>
                     {{-- <input type="hidden" name="user_id" id="user_id" value="{{ Auth::user()->id }}"> --}}
 
                     <input class="btn btn-primary" type="submit" value="Salva">

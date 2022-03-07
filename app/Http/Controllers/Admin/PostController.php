@@ -8,6 +8,7 @@ use App\Model\Post;
 use App\Model\Tag;
 use Illuminate\Support\Facades\Auth;
 use App\Model\Category;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -15,7 +16,8 @@ class PostController extends Controller
         'title' => 'required|max:255',
         'content' => 'required',
         'category_id' => 'exists:App\Model\Category,id',
-        'tags.*' => 'nullable|exists:App\Model\Tag,id'
+        'tags.*' => 'nullable|exists:App\Model\Tag,id',
+        'image' => 'nullable|image'
     ];
 
     /**
@@ -64,6 +66,10 @@ class PostController extends Controller
         $data['author'] = Auth::user()->name;
 
 
+        if (!empty($data["image"])) {
+            $img_path = Storage::put("uploads", $data["image"]);
+            $data["image"] = $img_path;
+        }
 
         $newPost = new Post();
 

@@ -27,7 +27,7 @@
                         @enderror
                     </div>
                     
-                    @error('tags.*')
+                @error('tags.*')
                     <div class="alert alert-danger mt-3">
                         {{ $message }}
                     </div>

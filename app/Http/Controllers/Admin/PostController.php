@@ -56,14 +56,14 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-
+        $request->validate($this->validator);
+        
         $data = $request->all();
         
         $data['user_id'] = Auth::user()->id;
         $data['author'] = Auth::user()->name;
 
 
-        $request->validate($this->validator);
 
         $newPost = new Post();
 

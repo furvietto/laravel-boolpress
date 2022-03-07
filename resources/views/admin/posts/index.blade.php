@@ -28,6 +28,7 @@
                         <th>Author</th>
                         <th>Content</th>
                         <th>Tags</th>
+                        <th>Category</th>
                         <th colspan="3">Actions</th>
                         
                     </tr>
@@ -42,6 +43,10 @@
                             @foreach ($post->tags()->get() as $tag)
                                <a href="">{{$tag->name}}</a> 
                             @endforeach
+                        </td>
+                        <td>
+                            
+                               <a href="{{route("admin.categories.show",$post->category()->first())}}">{{$post->category()->first()->name}}</a>     
                         </td>
                         <td><a href="{{route("admin.posts.show", $post->slug)}}" class="btn btn-warning">View</a></td>
                         <td>

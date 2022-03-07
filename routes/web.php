@@ -30,4 +30,6 @@ Route::middleware("auth")
         Route::resource("posts", "PostController");
         Route::resource("categories", "CategorieController");
         Route::resource("tags", "TagController");
+        
     });
+    

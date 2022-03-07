@@ -127,6 +127,12 @@ class PostController extends Controller
 
         $data = $request->all();
 
+        if (!empty($data['image'])) {
+            Storage::delete($post->image);
+            $img_path = Storage::put('uploads', $data['image']);
+            $post->image = $img_path;
+        }
+
         if ($data['title'] != $post->title) {
             $post->title = $data['title'];
             $post->slug = $post->createSlug($data['title']);
@@ -139,7 +145,7 @@ class PostController extends Controller
         }
        
 
-        $update = $post->update($data);
+        $update = $post->update();
 
          if (!empty($data['tags'])) {
             $post->tags()->sync($data['tags']);

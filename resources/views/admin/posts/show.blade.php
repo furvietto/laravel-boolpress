@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col">
                 <div class="card" style="width: 18rem;">
-                    <img class="card-img-top" src="{{ asset('storage/' . $post->image)}}" alt="Card image cap">
+                    <img class="card-img-top" src="{{asset('storage/' . $post->image)}}" alt="Card image cap">
                     <div class="card-body">
                       <h5 class="card-title">Titolo: {{$post->title}}</h5>
                       <h5 class="card-title">Content: {{$post->content}}</h5>

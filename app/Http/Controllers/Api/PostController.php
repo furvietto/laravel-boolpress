@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Model\Post;
 use Illuminate\Http\Request;
+use App\Model\Post;
 
-class PostControllerApi extends Controller
+class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::paginate(10);
+        $posts = Post::paginate(8);
 
         return response()->json([
             'response' => true,

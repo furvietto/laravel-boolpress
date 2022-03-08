@@ -28,7 +28,7 @@ Route::middleware("auth")
         Route::resource("categories", "CategorieController");
         Route::resource("tags", "TagController");
     });
-    Route::resource('posts', 'PostControllerApi');
+  
     
 Route::get('{any?}', function ($name = null) {
     return view('guest.welcome');

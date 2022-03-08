@@ -13,23 +13,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name("guest.index");
 
 Auth::routes();
 
 Route::middleware("auth")
-    ->namespace("Admin")
-    ->name("admin.")
-    ->prefix("admin")
-    ->group(function () {
-        Route::get("/" ,"HomeController@index")
+->namespace("Admin")
+->name("admin.")
+->prefix("admin")
+->group(function () {
+    Route::get("/" ,"HomeController@index")
         ->name('home');
         Route::get('/myposts', 'PostController@indexUser')->name('posts.indexUser');
         Route::resource("posts", "PostController");
         Route::resource("categories", "CategorieController");
         Route::resource("tags", "TagController");
-        
     });
+    Route::resource('posts', 'PostControllerApi');
     
+Route::get('{any?}', function ($name = null) {
+    return view('guest.welcome');
+})->where('any', '.*')->name("guest.index");

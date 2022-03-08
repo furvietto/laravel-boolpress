@@ -29,6 +29,8 @@
                         <th>Content</th>
                         <th>Tags</th>
                         <th>Category</th>
+                        <th>Created_at</th>
+                        <th>Updated_at</th>
                         <th colspan="3">Actions</th>
                         
                     </tr>
@@ -47,6 +49,18 @@
                         <td>
                             
                                <a href="{{route("admin.categories.show",$post->category()->first())}}">{{$post->category()->first()->name}}</a>     
+                        </td>
+                        <td>
+                            {{ Carbon\Carbon::parse($post->created_at)->englishDayOfWeek }}
+                            {{ Carbon\Carbon::parse($post->created_at)->day }}
+                            {{ Carbon\Carbon::parse($post->created_at)->englishMonth }}
+                            {{ Carbon\Carbon::parse($post->created_at)->year }}
+                        </td>
+                        <td>
+                            {{ Carbon\Carbon::parse($post->updated_at)->englishDayOfWeek }}
+                            {{ Carbon\Carbon::parse($post->updated_at)->day }}
+                            {{ Carbon\Carbon::parse($post->updated_at)->englishMonth }}
+                            {{ Carbon\Carbon::parse($post->updated_at)->year }}
                         </td>
                         <td><a href="{{route("admin.posts.show", $post->slug)}}" class="btn btn-warning">View</a></td>
                         <td>

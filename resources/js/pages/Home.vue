@@ -1,18 +1,56 @@
 .<template>
   <div>
-      ciao
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col">
+            <h1>Home</h1>
+          </div>
+        </div>
+        <Main :cards="cards" @changePage="changePage($event)"></Main>
+      </div>
   </div>
 </template>
 
 <script>
-export default {
-    name:"Home",
-    data() {
-        return {
-            
-        }
+import Axios from "axios";
+
+import Main from '../components/Main.vue';
+
+  export default {
+    name: "Home",
+    components: {
+        Main
     },
-}
+    data() {
+      return {
+          cards:{
+              posts: null,
+              next_page_url: null,
+              prev_page_url: null
+          }
+      }
+    },
+    created() {
+      this.getProducts('http://127.0.0.1:8000/v1/api/posts/random');
+    },
+    methods: {
+      changePage(vs) {
+        let url = this[vs];
+        if(url) {
+          this.getProducts(url);
+        }
+      },
+      getProducts(url){
+          Axios.get(url).then(
+            (result) => {
+              this.posts = result.data.results.data;
+              this.next_page_url = result.data.results.next_page_url;
+              this.prev_page_url = result.data.results.prev_page_url;
+            });
+      }
+      
+    }
+  }
 </script>
 
 <style lang="scss">

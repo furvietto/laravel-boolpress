@@ -1,9 +1,7 @@
 <template>
    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
       <div class="container">
-          <a class="navbar-brand" href="#">
-              <img id="logo" class=" store" :src="logo" alt="logo">
-          </a>
+        <router-link class="nav-link" :to="{ name: 'home'}"> <img id="logo" class="store" :src="logo" alt="logo"></router-link>
           <button class="navbar-toggler" type="button" data-toggle="collapse"
                   data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                   aria-expanded="false">
@@ -16,7 +14,7 @@
                 v-for="(item) in menuItems"
                 :key="item.id"
                 >
-                  <a class="nav-link" :href="item.routeName">{{ item.label }}</a>
+                  <router-link class="nav-link" :to="{name:item.routeName}">{{item.label}}</router-link>
                </li>
              </ul>
           </div>

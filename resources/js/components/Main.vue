@@ -38,6 +38,7 @@ import Axios from "axios";
     methods: {
       changePage(vs) {
         let url = this[vs];
+        console.log(url)
         if(url) {
           this.getProducts(url);
         }
@@ -45,10 +46,11 @@ import Axios from "axios";
       getProducts(url){
           Axios.get(url).then(
             (result) => {
-              console.log(result)
               this.posts = result.data.results.data;
               this.next_page_url = result.data.results.next_page_url;
               this.prev_page_url = result.data.results.prev_page_url;
+              console.log(this.next_page_url)
+              console.log(this.prev_page_url)
             });
       }
       

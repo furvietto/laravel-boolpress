@@ -2,7 +2,7 @@
    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
       <div class="container">
           <a class="navbar-brand" href="#">
-              <img id="logo" class="w-25" :src="logo" alt="logo">
+              <img id="logo" class=" store" :src="logo" alt="logo">
           </a>
           <button class="navbar-toggler" type="button" data-toggle="collapse"
                   data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -16,7 +16,7 @@
                 v-for="(item) in menuItems"
                 :key="item.id"
                 >
-                  <a class="nav-link" :href="item.link">{{ item.label }}</a>
+                  <a class="nav-link" :href="item.routeName">{{ item.label }}</a>
                </li>
              </ul>
           </div>
@@ -33,29 +33,20 @@
       logo: require('../../img/bag-shopping-solid.svg'),
       menuItems: [
                     {
-                        label: 'Item 1',
-                        link: '#',
-                        id: 1,
+                        label: 'Home',
+                        routeName: 'home'
                     },
                     {
-                        label: 'Item 2',
-                        link: '#',
-                         id: 2,
+                        label: 'Products',
+                        routeName: 'products'
                     },
                     {
-                        label: 'Item 3',
-                        link: '#',
-                        id: 3
+                        label: 'Chi Siamo',
+                        routeName: 'about'
                     },
                     {
-                        label: 'Item 4',
-                        link: '#',
-                        id: 4,
-                    },
-                    {
-                        label: 'Item 5',
-                        link: '#',
-                        id: 5,
+                        label: 'Contatti',
+                        routeName: 'contacts'
                     }
                 ],
       }
@@ -64,5 +55,7 @@
 </script>
 
 <style lang="scss">
-
+  .store {
+    width: 15%;
+  }
 </style>

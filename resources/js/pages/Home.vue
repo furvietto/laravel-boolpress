@@ -31,11 +31,11 @@ import Main from '../components/Main.vue';
       }
     },
     created() {
-      this.getProducts('http://127.0.0.1:8000/v1/api/posts/random');
+      this.getProducts('http://127.0.0.1:8000/api/v1/posts/random');
     },
     methods: {
       changePage(vs) {
-        let url = this[vs];
+        let url = this.cards[vs];
         if(url) {
           this.getProducts(url);
         }
@@ -43,9 +43,9 @@ import Main from '../components/Main.vue';
       getProducts(url){
           Axios.get(url).then(
             (result) => {
-              this.posts = result.data.results.data;
-              this.next_page_url = result.data.results.next_page_url;
-              this.prev_page_url = result.data.results.prev_page_url;
+              this.cards.posts = result.data.results.data;
+              this.cards.next_page_url = result.data.results.next_page_url;
+              this.cards.prev_page_url = result.data.results.prev_page_url;
             });
       }
       

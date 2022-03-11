@@ -14,7 +14,8 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
-    'apiKey' => env('API_KEY', ''),
+    
+    'apiKey' => env('API_KEY', 'abc123hewek43957'),
 
     /*
     |--------------------------------------------------------------------------

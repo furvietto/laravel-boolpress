@@ -29,7 +29,7 @@ import Axios from "axios";
     },
     methods: {
       getProduct(url){
-          Axios.get(url).then(
+          Axios.get(url, {headers: {'Authorization': 'Bearer abc123hewek43957'}}).then(
             (result) => {
               console.log(result);
               this.post = result.data.results.data;

@@ -37,7 +37,7 @@ require('./bootstrap');
                 component: About
             },
             {
-                path: '/contact',
+                path: '/contacts',
                 name: 'contact',
                 component: Contact
             },

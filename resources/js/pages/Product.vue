@@ -20,7 +20,7 @@ import Axios from "axios";
     props: ['id'],
     data() {
       return {
-        post: null
+        post: []
       }
     },
     created() {

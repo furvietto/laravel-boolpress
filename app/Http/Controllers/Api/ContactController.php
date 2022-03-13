@@ -9,9 +9,11 @@ class ContactController extends Controller
 {
     public function sendMessage(Request $request)
     {
+        $path = $request->file->store('uploads');
+        
         return response()->json([
             'response' => true,
-            'results' =>  $request->all(),
+            'results' =>  $path,
         ]);
     }
 }

@@ -6,6 +6,7 @@
             <h1>Home</h1>
           </div>
         </div>
+         <Loading v-if="loading"/>
         <Main :cards="cards" @changePage="changePage($event)"></Main>
       </div>
   </div>
@@ -15,14 +16,17 @@
 import Axios from "axios";
 
 import Main from '../components/Main.vue';
+import Loading from '../components/Loading.vue'
 
   export default {
     name: "Home",
     components: {
-        Main
+        Main,
+        Loading
     },
     data() {
       return {
+        loading:false,
           cards:{
               posts: null,
               next_page_url: null,
@@ -41,12 +45,16 @@ import Main from '../components/Main.vue';
         }
       },
       getProducts(url){
+        this.loading = true
+        setTimeout(() => {
           Axios.get(url).then(
             (result) => {
               this.cards.posts = result.data.results.data;
               this.cards.next_page_url = result.data.results.next_page_url;
               this.cards.prev_page_url = result.data.results.prev_page_url;
+               this.loading = false
             });
+        }, 2000);
       }
       
     }
